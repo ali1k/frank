@@ -7,6 +7,13 @@ export default {
             config: {
 
             }
+        },
+        'http://frank.ld-r.org/': {
+            list: [
+            'http://semanticweb.cs.vu.nl/2009/11/sem/eventType', 'http://lsdis.cs.uga.edu/projects/semdis/opus#year', 'http://purl.org/linguistics/gold/abbreviation', 'http://schema.org/name', 'http://dbpedia.org/ontology/country', 'http://dbpedia.org/ontology/city'
+            ],
+            config: {
+            }
         }
     }
 };

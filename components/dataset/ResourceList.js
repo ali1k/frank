@@ -3,11 +3,25 @@ import {NavLink} from 'fluxible-router';
 import URIUtil from '../utils/URIUtil';
 class ResourceList extends React.Component {
     componentDidMount() {
+        $('.Collage').collagePlus(
+            {
+                'effect' : 'effect-5',
+                'allowPartialLastRow' : true
+            }
+        );
     }
-    buildLink(v, g, title, icon){
+    componentDidUpdate() {
+        $('.Collage').collagePlus(
+            {
+                'effect' : 'effect-5',
+                'allowPartialLastRow' : true
+            }
+        );
+    }
+    buildLink(v, g, title, icon, image){
         if(this.props.OpenInNewTab){
             return (
-                <a href={'/dataset/' + g + '/resource/' + v} target="_blank"><i className={icon}></i> {title} </a>
+                <a href={'/dataset/' + g + '/resource/' + v} target="_blank" title={title}><div className="Image_Wrapper"><img className="ui image bordered rounded small" src={image} alt={title} /></div></a>
             );
         }else{
             return (
@@ -58,12 +72,13 @@ class ResourceList extends React.Component {
         let self = this;
         let user = this.context.getUser();
         let graphName = this.props.graphName;
-        let userAccess, title, list, dbClass = 'black cube icon';
+        let userAccess, title, image, list, dbClass = 'black cube icon';
         if(!this.props.resources.length){
             list = <div className="ui warning message"><div className="header"> There was no resource in the selected dataset! This might be due to the connection problems. Please check the connection parameters of your dataset's Sparql endpoint or add resources to your dataset...</div></div>;
         }else{
             list = this.props.resources.map((node, index) => {
                 title = node.title ? node.title : (node.label ? node.label : URIUtil.getURILabel(node.v));
+                image = node.image ? node.image : '';
                 if(!self.props.enableAuthentication) {
                     dbClass = 'black cube icon';
                     if(self.props.config && typeof self.props.config.readOnly !== 'undefined' && !self.props.config.readOnly){
@@ -83,13 +98,13 @@ class ResourceList extends React.Component {
                 }
                 return (
                     <div className="item animated fadeIn" key={index}>
-                        {self.buildLink(encodeURIComponent(node.v), encodeURIComponent(node.g), title, dbClass)}
+                        {self.buildLink(encodeURIComponent(node.v), encodeURIComponent(node.g), title, dbClass, image)}
                     </div>
                 );
             });
         }
         return (
-            <div className={'ui ' + (this.props.isBig ? 'big' : '') + ' divided animated list'} ref="resourceList">
+            <div className={'ui big' + ' Collage'} ref="resourceList">
                 {list}
             </div>
         );

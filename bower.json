@@ -12,6 +12,7 @@
   "homepage": "http://risis.eu",
   "dependencies": {
     "semantic": "semantic-ui#~2.1.6",
-    "animate.css": "~3.4.0"
+    "animate.css": "~3.4.0",
+    "jquery-collagePlus": "~0.3.3"
   }
 }

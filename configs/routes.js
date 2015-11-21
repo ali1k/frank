@@ -8,11 +8,15 @@ export default {
     home: {
         path: '/',
         method: 'get',
-        handler: require('../components/Home'),
-        label: appShortTitle,
+        handler: require('../components/FacetedBrowser'),
+        label: 'Faceted Browser',
         action: (context, payload, done) => {
-            context.dispatch('UPDATE_PAGE_TITLE', { pageTitle: appFullTitle + ' | Home'});
-            done();
+            let graphName, page;
+            graphName = payload.params.id;
+            if (!graphName) {
+                graphName = 0;
+            }
+            context.executeAction(loadFacets, {mode: 'init', id: graphName, selection: 0, page: 1}, done);
         }
     },
     about: {

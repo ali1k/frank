@@ -12,6 +12,7 @@ class DefaultHTMLLayout extends React.Component {
                 <meta name="viewport" content="width=device-width, user-scalable=no" />
                 <link href="/bower_components/semantic/dist/semantic.min.css" rel="stylesheet" type="text/css" />
                 <link href="/bower_components/animate.css/animate.min.css" rel="stylesheet" type="text/css" />
+                <link href="/bower_components/jquery-collagePlus/css/transitions.css" rel="stylesheet" type="text/css" />
                 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
             </head>
             <body>
@@ -24,6 +25,7 @@ class DefaultHTMLLayout extends React.Component {
                 <script src="/bower_components/semantic/dist/components/checkbox.min.js"></script>
                 <script src="/bower_components/semantic/dist/components/dimmer.min.js"></script>
                 <script src="/bower_components/semantic/dist/components/modal.min.js"></script>
+                <script src="/bower_components/jquery-collagePlus/jquery.collagePlus.min.js"></script>
                 <script src={'/public/js/' + this.props.clientFile}>></script>
             </body>
             </html>

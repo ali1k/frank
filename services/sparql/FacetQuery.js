@@ -4,11 +4,13 @@ class FacetQuery{
     constructor() {
         /*jshint multistr: true */
         this.prefixes='\
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \
         PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \
         PREFIX dcterms: <http://purl.org/dc/terms/> \
         PREFIX void: <http://rdfs.org/ns/void#> \
         PREFIX foaf: <http://xmlns.com/foaf/0.1/> \
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#> \
+        PREFIX opus: <http://lsdis.cs.uga.edu/projects/semdis/opus#> \
          ';
         this.query='';
     }
@@ -133,19 +135,25 @@ class FacetQuery{
         if(String(graphName)!=='' && graphName){
             /*jshint multistr: true */
             this.query = '\
-            SELECT DISTINCT ?s WHERE {\
+            SELECT DISTINCT ?s ?title ?image WHERE {\
                 { GRAPH <' + graphName + '> \
                     { '+ st +' \
+                    ?s rdfs:label ?title . \
+                    ?s opus:year ?year . \
+                    ?s foaf:img ?image . \
                     } \
                 } \
-            } LIMIT ' + limit + ' OFFSET ' + noffset;
+            } ORDER BY DESC(?year) LIMIT ' + limit + ' OFFSET ' + noffset;
         }else{
             /*jshint multistr: true */
             this.query = '\
-            SELECT DISTINCT ?s WHERE {\
+            SELECT DISTINCT ?s ?title ?image WHERE {\
                 { '+ st +' \
+                ?s rdfs:label ?title . \
+                ?s opus:year ?year . \
+                ?s foaf:img ?image . \
                 } \
-            } LIMIT ' + limit + ' OFFSET ' + noffset;
+            } ORDER BY DESC(?year) LIMIT ' + limit + ' OFFSET ' + noffset;
         }
         return this.prefixes + this.query;
     }

@@ -4,7 +4,7 @@ export default {
     //short page title
     appShortTitle: ['LFB'],
     //Default Named Graph under observation, if not set , will consider all existing graph names
-    defaultGraphName: [''],
+    defaultGraphName: ['http://frank.ld-r.org/'],
     //will prevent access if not logged in
     enableAuthentication: 0,
     //graph that stores users data, must be loaded beforehand

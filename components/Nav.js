@@ -31,15 +31,10 @@ class Nav extends React.Component {
             }
         }
         return (
-            <nav ref="defaultNavbar" className="ui blue menu inverted navbar page grid">
-                    <NavLink routeName="home" className="brand item" activeClass="active"><img style={{height: '20', width: '20'}} className="ui mini image" src="/assets/img/ld-reactor.gif" alt="ld-reactor" /></NavLink>
-                    <NavLink routeName="about" className="item" activeClass="active">About {appShortTitle} </NavLink>
-                    <NavLink routeName="datasets" className="item" activeClass="active" href="/datasets"> Datasets</NavLink>
+            <nav ref="defaultNavbar" className="ui orange pointed menu inverted navbar page grid">
+                    <NavLink routeName="home" className="brand item" activeClass="active"><img style={{height: '30', width: '30'}} className="ui image" src="/assets/img/frank.png" alt="frank" /></NavLink>
                     <div className="right menu">
-                        <div className="item link" onClick={this.showHelpModal}>
-                                <i className="small help circle icon"></i>
-                        </div>
-                        <a href="http://github.com/ali1k/ld-r" className="ui item link">
+                        <a href="http://github.com/ali1k/frank" className="ui item link">
                                 <i className="github circle icon"></i> Github
                         </a>
                         {userMenu}
