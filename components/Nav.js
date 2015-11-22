@@ -32,7 +32,7 @@ class Nav extends React.Component {
         }
         return (
             <nav ref="defaultNavbar" className="ui orange pointed menu inverted navbar page grid">
-                    <NavLink routeName="home" className="brand item" activeClass="active"><img style={{height: '30', width: '30'}} className="ui image" src="/assets/img/frank.png" alt="frank" /></NavLink>
+                    <NavLink routeName="home" className="brand item" activeClass="active"><img style={{height: '30', width: '30'}} className="ui image" src="/assets/img/frank.png" alt="frank" /> &nbsp; Linked Frank Badges</NavLink>
                     <div className="right menu">
                         <a href="http://github.com/ali1k/frank" className="ui item link">
                                 <i className="github circle icon"></i> Github
