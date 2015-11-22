@@ -52,5 +52,13 @@ class DatasetUtil{
       }
       return total;
     }
+    parsePolygons(body) {
+        let output = [];
+      let parsed = JSON.parse(body);
+      parsed.results.bindings.forEach(function(el) {
+        output.push( {s: el.s.value, geometry: el.geometry.value, label: el.label.value});
+      });
+      return output;
+    }
 }
 export default DatasetUtil;

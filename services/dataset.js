@@ -104,6 +104,20 @@ export default {
                 callback(null, {graphName: graphName, total: 0});
             });
             //used to update other facets based on a change in a facet
+        } else if (resource === 'dataset.polygons') {
+            graphName = (params.id ? decodeURIComponent(params.id) : 0);
+            endpointParameters = getEndpointParameters(graphName);
+            query = queryObject.getPolygons();
+            //build http uri
+            //send request
+            rp.get({uri: getHTTPQuery('read', query, endpointParameters, outputFormat)}).then(function(res){
+                callback(null, {
+                    polygons: utilObject.parsePolygons(res),
+                });
+            }).catch(function (err) {
+                console.log(err);
+                callback(null, {polygons: []});
+            });
         }
     }
     // other methods

@@ -10,6 +10,8 @@ class DatasetQuery{
         PREFIX foaf: <http://xmlns.com/foaf/0.1/> \
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#> \
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \
+        PREFIX schema: <http://schema.org/> \
+        PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> \
          ';
         this.query='';
     }
@@ -92,6 +94,26 @@ class DatasetQuery{
             } LIMIT ' + limit + ' OFFSET ' + offset + ' \
             ';
         }
+        return this.prefixes + this.query;
+    }
+    getPolygons() {
+        /*jshint multistr: true */
+        this.query = '\
+        SELECT DISTINCT ?s ?label ?geometry WHERE {\
+            { GRAPH <http://frank.ld-r.org/> \
+                {  \
+                    ?s a schema:Event . \
+                    ?s schema:location ?loc . \
+                    ?s rdfs:label ?label . \
+                } \
+            } \
+            { GRAPH <http://frank.ld-r.org/polygons> \
+                { \
+                    ?loc geo:geometry ?geometry . \
+                } \
+            } \
+        } \
+        ';
         return this.prefixes + this.query;
     }
 }
