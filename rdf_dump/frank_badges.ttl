@@ -437,6 +437,8 @@ frank:1990-025 a schema:Event ;
  sioc:id "1990-025".
 frank:1990-026 a schema:Event ;
  schema:name """European on Knowledge Aquisition, Modeling and Management""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://ekaw1999.ekaw.org>;
  gold:abbreviation """EKAW""";
  rdfs:label """EKAW1999""";
  sem:eventType """Workshop""";
@@ -476,6 +478,8 @@ frank:2000-002 a schema:Event ;
  sioc:id "2000-002".
 frank:2000-003 a schema:Event ;
  schema:name """International Conference on Knowledge Engineering and Knowledge Management (INRIA?)""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://ekaw2000.ekaw.org>;
  gold:abbreviation """EKAW""";
  rdfs:label """EKAW2000""";
  sem:eventType """Conference""";
@@ -515,6 +519,8 @@ frank:2000-005 a schema:Event ;
  sioc:id "2000-005".
 frank:2000-006 a schema:Event ;
  schema:name """International World Wide Web Conference""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://www2001.org>;
  gold:abbreviation """WWW""";
  rdfs:label """WWW2001""";
  sem:eventType """Conference""";
@@ -555,6 +561,8 @@ frank:2000-008 a schema:Event ;
  sioc:id "2000-008".
 frank:2000-009 a schema:Event ;
  schema:name """International Conference on Knowledge Engineering and Knowledge Management (INRIA)""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://ekaw2002.ekaw.org>;
  gold:abbreviation """EKAW""";
  rdfs:label """EKAW2002""";
  sem:eventType """Conference""";
@@ -568,6 +576,8 @@ frank:2000-009 a schema:Event ;
  sioc:id "2000-009".
 frank:2000-010 a schema:Event ;
  schema:name """International Semantic Web Conference""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://iswc2002.semanticweb.org>;
  gold:abbreviation """ISWC""";
  rdfs:label """ISWC2002""";
  sem:eventType """Conference""";
@@ -720,6 +730,8 @@ frank:2000-021 a schema:Event ;
  sioc:id "2000-021".
 frank:2000-022 a schema:Event ;
  schema:name """International Semantic Web Conference""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://iswc2004.semanticweb.org>;
  gold:abbreviation """ISWC""";
  rdfs:label """ISWC2004""";
  sem:eventType """Conference""";
@@ -746,6 +758,8 @@ frank:2000-023 a schema:Event ;
  sioc:id "2000-023".
 frank:2000-024 a schema:Event ;
  schema:name """International World Wide Web Conference""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://www2004.org>;
  gold:abbreviation """WWW""";
  rdfs:label """WWW2004""";
  sem:eventType """Conference""";
@@ -785,6 +799,8 @@ frank:2000-026 a schema:Event ;
  sioc:id "2000-026".
 frank:2000-027 a schema:Event ;
  schema:name """European Semantic Web Conference""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://2005.eswc-conferences.org>;
  gold:abbreviation """ESWC""";
  rdfs:label """ESWC2005""";
  sem:eventType """Conference""";
@@ -823,6 +839,8 @@ frank:2000-029 a schema:Event ;
  sioc:id "2000-029".
 frank:2000-030 a schema:Event ;
  schema:name """International Conference on Knowledge Engineering and Knowledge Management""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://ekaw2006.ekaw.org>;
  gold:abbreviation """EKAW""";
  rdfs:label """EKAW2006""";
  sem:eventType """Conference""";
@@ -860,6 +878,8 @@ frank:2000-032 a schema:Event ;
  sioc:id "2000-032".
 frank:2000-033 a schema:Event ;
  schema:name """European Semantic Web Conference""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://2006.eswc-conferences.org>;
  gold:abbreviation """ESWC""";
  rdfs:label """ESWC2006""";
  sem:eventType """Conference""";
@@ -899,6 +919,8 @@ frank:2000-035 a schema:Event ;
  sioc:id "2000-035".
 frank:2000-036 a schema:Event ;
  schema:name """International World Wide Web Conference""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://www2006.org>;
  gold:abbreviation """WWW""";
  rdfs:label """WWW2006""";
  sem:eventType """Conference""";
@@ -1051,6 +1073,8 @@ frank:2000-047 a schema:Event ;
  sioc:id "2000-047".
 frank:2000-048 a schema:Event ;
  schema:name """International Semantic Web Conference""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://iswc2008.semanticweb.org>;
  gold:abbreviation """ISWC""";
  rdfs:label """ISWC2008""";
  sem:eventType """Conference""";
@@ -1090,6 +1114,8 @@ frank:2000-050 a schema:Event ;
  sioc:id "2000-050".
 frank:2000-051 a schema:Event ;
  schema:name """European Semantic Web Conference""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://2009.eswc-conferences.org>;
  gold:abbreviation """ESWC""";
  rdfs:label """ESWC2009""";
  sem:eventType """Conference""";
@@ -1129,6 +1155,8 @@ frank:2000-053 a schema:Event ;
  sioc:id "2000-053".
 frank:2000-054 a schema:Event ;
  schema:name """International Semantic Web Conference""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://iswc2009.semanticweb.org>;
  gold:abbreviation """ISWC""";
  rdfs:label """ISWC2009""";
  sem:eventType """Conference""";
@@ -1170,6 +1198,8 @@ frank:2000-056 a schema:Event ;
  sioc:id "2000-056".
 frank:2000-057 a schema:Event ;
  schema:name """International World Wide Web Conference""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://www2004.org>;
  gold:abbreviation """WWW""";
  rdfs:label """WWW2004""";
  sem:eventType """Conference""";
@@ -1299,6 +1329,8 @@ frank:2010-009 a schema:Event ;
  sioc:id "2010-009".
 frank:2010-010 a schema:Event ;
  schema:name """International Semantic Web Conference""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://iswc2011.semanticweb.org>;
  gold:abbreviation """ISWC""";
  rdfs:label """ISWC2011""";
  sem:eventType """Conference""";
@@ -1324,6 +1356,8 @@ frank:2010-011 a schema:Event ;
  sioc:id "2010-011".
 frank:2010-012 a schema:Event ;
  schema:name """International Semantic Web Conference""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://iswc2012.semanticweb.org>;
  gold:abbreviation """ISWC""";
  rdfs:label """ISWC2012""";
  sem:eventType """Conference""";
@@ -1363,6 +1397,8 @@ frank:2010-014 a schema:Event ;
  sioc:id "2010-014".
 frank:2010-015 a schema:Event ;
  schema:name """International Conference on Knowledge Engineering and Knowledge Management""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://ekaw2012.ekaw.org>;
  gold:abbreviation """EKAW""";
  rdfs:label """EKAW2012""";
  sem:eventType """Conference""";
@@ -1519,6 +1555,8 @@ frank:2010-026 a schema:Event ;
  sioc:id "2010-026".
 frank:2010-027 a schema:Event ;
  schema:name """European Semantic Web Conference""";
+ a <http://data.semanticweb.org/ns/swc/ontology#ConferenceEvent>;
+ <http://www.w3.org/2002/12/cal/ical#url> <http://2014.eswc-conferences.org>;
  gold:abbreviation """ESWC""";
  rdfs:label """ESWC2014""";
  sem:eventType """Conference""";
