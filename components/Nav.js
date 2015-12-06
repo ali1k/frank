@@ -27,12 +27,13 @@ class Nav extends React.Component {
                                 </div>
                             </div>;
             }else{
-                userMenu = <div className="ui right item"> <a className="ui mini circular teal button" href="/login">Sign-in</a> &nbsp;  <a href="/register" className="ui mini circular yellow button">Register</a> </div>;
+                userMenu = <div className="ui right item"> <a className="ui mini circular teal button" href="/login">Sign-in</a> </div>;
             }
         }
         return (
             <nav ref="defaultNavbar" className="ui orange pointed menu inverted navbar page grid">
-                    <NavLink routeName="home" className="brand item" activeClass="active"><img style={{height: '30', width: '30'}} className="ui image" src="/assets/img/frank.png" alt="frank" /> &nbsp; Linked Frank Badges</NavLink>
+                    <a href="/" className="brand item active"><img style={{height: '30', width: '30'}} className="ui image" src="/assets/img/frank.png" alt="frank" /> &nbsp; Linked Frank Badges</a>
+                    <NavLink routeName="about" className="item" activeClass="green"> About</NavLink>
                     <div className="right menu">
                         <a href="http://github.com/ali1k/frank" className="ui item link">
                                 <i className="github circle icon"></i> Github

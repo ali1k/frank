@@ -6,13 +6,13 @@ export default {
     //Default Named Graph under observation, if not set , will consider all existing graph names
     defaultGraphName: ['http://frank.ld-r.org/'],
     //will prevent access if not logged in
-    enableAuthentication: 0,
+    enableAuthentication: 1,
     //graph that stores users data, must be loaded beforehand
     authGraphName: ['http://ld-r.org/users'],
     //the domain name under which basic dynamic resources and user resources will be defined
     baseResourceDomain: ['http://ld-r.org'],
     //will allow super users to confirm and activate regiastered users
-    enableUserConfirmation: 0,
+    enableUserConfirmation: 1,
     //will enable email notifications
     enableEmailNotifications: 0,
     //will put all update actions in log folder

@@ -31,15 +31,16 @@ export default {
                 }
             }
            //control access on authentication
-            if(enableAuthentication){
-                if(!req.user){
-                    callback(null, {graphName: graphName, facets: {}, total: 0, page: 1});
-                }else{
-                    user = req.user;
-                }
-            }else{
-                user = {accountName: 'open'};
-            }
+           if(enableAuthentication){
+               if(!req.user){
+                   user = {accountName: 'open'};
+                   //callback(null, {graphName: graphName, facets: {}, total: 0, page: 1});
+               }else{
+                   user = req.user;
+               }
+           }else{
+               user = {accountName: 'open'};
+           }
             query = queryObject.getSideEffects(cGraphName, decodeURIComponent(params.selection.propertyURI), params.selection.prevSelection);
             //build http uri
             //send request
@@ -67,15 +68,16 @@ export default {
                 }
             }
            //control access on authentication
-            if(enableAuthentication){
-                if(!req.user){
-                    callback(null, {graphName: graphName, facets: {}, total: 0, page: 1});
-                }else{
-                    user = req.user;
-                }
-            }else{
-                user = {accountName: 'open'};
-            }
+           if(enableAuthentication){
+               if(!req.user){
+                   user = {accountName: 'open'};
+                   //callback(null, {graphName: graphName, facets: {}, total: 0, page: 1});
+               }else{
+                   user = req.user;
+               }
+           }else{
+               user = {accountName: 'open'};
+           }
             //do not query if unselected
             if(!Boolean(params.selection.status)){
                 callback(null, {
@@ -118,15 +120,16 @@ export default {
                 maxOnPage = 20;
             }
            //control access on authentication
-            if(enableAuthentication){
-                if(!req.user){
-                    callback(null, {graphName: graphName, facets: {}, total: 0, page: 1});
-                }else{
-                    user = req.user;
-                }
-            }else{
-                user = {accountName: 'open'};
-            }
+           if(enableAuthentication){
+               if(!req.user){
+                   user = {accountName: 'open'};
+                   //callback(null, {graphName: graphName, facets: {}, total: 0, page: 1});
+               }else{
+                   user = req.user;
+               }
+           }else{
+               user = {accountName: 'open'};
+           }
             if(params.mode === 'init'){
                 //get all resources
                 query = queryObject.countSecondLevelPropertyValues(cGraphName, 0, {});

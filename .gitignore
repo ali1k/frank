@@ -4,6 +4,5 @@ build
 *.log
 logs/*.log
 tmp.js
-configs/server.js
 plugins/email/config.js
 mapServer/config.js
