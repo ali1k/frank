@@ -14,7 +14,7 @@ export default {
             },
             'http://frank.ld-r.org/': {
                 resourceFocusType: ['http://schema.org/Event'],
-                readOnly: 1,
+                readOnly: 0,
             },
             'http://ld-r.org/users': {
                 readOnly: 0
