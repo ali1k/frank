@@ -60,7 +60,18 @@ export default {
                     objectIViewer: ['BasicImageView']
                 },
                 'http://schema.org/location': {
+                    isHidden: 0
+                    //objectIViewer: ['BasicLinkedIndividualView'],
+                    //linkedGraph: ['http://frank.ld-r.org/polygons']
+                },
+                'http://rdfs.org/sioc/ns#id': {
                     isHidden: 1
+                },
+                'http://www.w3.org/2002/07/owl#sameAs': {
+                    shortenURI: 0
+                },
+                'http://www.europeana.eu/schemas/edm/country': {
+                    shortenURI: 0
                 },
                 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type': {
                     isHidden: 1,
