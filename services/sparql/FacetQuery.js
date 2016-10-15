@@ -14,8 +14,11 @@ class FacetQuery{
          ';
         this.query='';
     }
-    getMasterPropertyValues(graphName, propertyURI) {
+    getMasterPropertyValues(graphName, type, propertyURI) {
         let st = '?s <'+ propertyURI + '>  ?v.';
+        //---to support resource focus types
+        let st_extra = this.makeExtraTypeFilters(type);
+        st = st + ' ' + st_extra;
         if(String(graphName)!=='' && graphName){
             /*jshint multistr: true */
             this.query = '\
@@ -36,7 +39,7 @@ class FacetQuery{
         }
         return this.prefixes + this.query;
     }
-    getMultipleFilters(prevSelection) {
+    getMultipleFilters(prevSelection, type) {
         let st = '', filters, tmp, i = 0, hasURIVal = 0, hasLiteralVal = 0, typedLiteralVal = '';
         let typeVal = {};
         filters = [];
@@ -78,12 +81,33 @@ class FacetQuery{
         st = st + ' FILTER (' + filters.join(' && ') + ') ';
         if(!filters.length){
             //no constrain is selected
-            st = '?s rdf:type ?o .';
+            st = '?s rdf:type ?type .';
         }
-        return st;
+
+        //---to support resource focus types
+        let st_extra = this.makeExtraTypeFilters(type);
+        return st + st_extra;
     }
-    getSideEffects(graphName, propertyURI, prevSelection) {
-        let st = this.getMultipleFilters(prevSelection);
+    makeExtraTypeFilters(type){
+        //---to support resource focus types
+        let st_extra = ' ?s a <'+ type + '> .';
+        //will get all the types
+        if(!type || !type.length || (type.length && !type[0]) ){
+            st_extra = '';
+        }
+        //if we have multiple type, get all of them
+        let typeURIs = [];
+        if(type.length > 1){
+            type.forEach(function(uri) {
+                typeURIs.push('<' + uri + '>');
+            });
+            st_extra = ' ?s a ?type . FILTER (?type IN (' + typeURIs.join(',') + '))';
+        }
+        //-----------------------------------------------
+        return st_extra;
+    }
+    getSideEffects(graphName, type, propertyURI, prevSelection) {
+        let st = this.getMultipleFilters(prevSelection, type);
         st = st + '?s <'+ propertyURI + '>  ?v.';
         if(String(graphName)!=='' && graphName){
             /*jshint multistr: true */
@@ -106,8 +130,8 @@ class FacetQuery{
         }
         return this.prefixes + this.query;
     }
-    countSecondLevelPropertyValues(graphName, propertyURI, prevSelection) {
-        let st = this.getMultipleFilters(prevSelection);
+    countSecondLevelPropertyValues(graphName, type, propertyURI, prevSelection) {
+        let st = this.getMultipleFilters(prevSelection, type);
         if(String(graphName)!=='' && graphName){
             /*jshint multistr: true */
             this.query = '\
@@ -129,15 +153,24 @@ class FacetQuery{
         }
         return this.prefixes + this.query;
     }
-    getSecondLevelPropertyValues(graphName, propertyURI, prevSelection, limit, offset) {
+    getSecondLevelPropertyValues(graphName, rtconfig, propertyURI, prevSelection, limit, offset) {
+        let type = rtconfig.type;
+        let labelProperty = rtconfig.labelProperty;
+        let selectStr = '';
+        let titleStr = '';
         let noffset = (offset-1)*limit;
-        let st = this.getMultipleFilters(prevSelection);
+        //add labels for entities
+        if(labelProperty.length){
+            selectStr = ' ?title ';
+            titleStr = ' OPTIONAL {?s <'+labelProperty[0]+'> ?title .} ';
+        }
+        let st = this.getMultipleFilters(prevSelection, type);
         if(String(graphName)!=='' && graphName){
             /*jshint multistr: true */
             this.query = '\
-            SELECT DISTINCT ?s ?title ?image WHERE {\
+            SELECT DISTINCT ?s ?image ' + selectStr + ' WHERE {\
                 { GRAPH <' + graphName + '> \
-                    { '+ st +' \
+                    { '+ st + titleStr +' \
                     ?s rdfs:label ?title . \
                     ?s opus:year ?year . \
                     ?s foaf:img ?image . \
@@ -147,8 +180,8 @@ class FacetQuery{
         }else{
             /*jshint multistr: true */
             this.query = '\
-            SELECT DISTINCT ?s ?title ?image WHERE {\
-                { '+ st +' \
+            SELECT DISTINCT ?s ?image ' + selectStr + ' WHERE {\
+                { '+ st + titleStr +' \
                 ?s rdfs:label ?title . \
                 ?s opus:year ?year . \
                 ?s foaf:img ?image . \
