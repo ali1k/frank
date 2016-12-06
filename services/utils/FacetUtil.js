@@ -1,4 +1,6 @@
 'use strict';
+import {checkAccess} from './helpers';
+
 class FacetUtil{
     constructor() {
 
@@ -16,12 +18,12 @@ class FacetUtil{
         return property;
     }
     parseCountResourcesByType(body) {
-      let total = 0;
-      let parsed = JSON.parse(body);
-      if(parsed.results.bindings.length){
-          total = parsed.results.bindings[0].total.value;
-      }
-      return total;
+        let total = 0;
+        let parsed = JSON.parse(body);
+        if(parsed.results.bindings.length){
+            total = parsed.results.bindings[0].total.value;
+        }
+        return total;
     }
     parseMasterPropertyValues(body) {
         let self = this;
@@ -32,12 +34,24 @@ class FacetUtil{
         });
         return output;
     }
-    parseSecondLevelPropertyValues(graphName, body) {
+    parseSecondLevelPropertyValues(user, datasetURI, body) {
         let self = this;
         let output=[];
+        let resources = [];
+        let accessLevel = {access: false};
         let parsed = JSON.parse(body);
         parsed.results.bindings.forEach(function(el) {
-            output.push( {v: el.s.value, label: self.getPropertyLabel(el.s.value), g: graphName, title: el.title ? el.title.value : '', image: el.image ? el.image.value : ''});
+            if(resources.indexOf(el.s.value) === -1){
+                resources.push(el.s.value);
+                if(user){
+                    /*
+                    if(user.id == el.instances[0].value) {
+                        userIsCreator = 1;
+                    }*/
+                    accessLevel=checkAccess(user, datasetURI, el.s.value, 0);
+                }
+                output.push( {v: el.s.value, label: self.getPropertyLabel(el.s.value), title: (el.title && el.title.value ? el.title.value : ''), image: el.image ? el.image.value : '', d: datasetURI, accessLevel: accessLevel});
+            }
         });
         return output;
     }

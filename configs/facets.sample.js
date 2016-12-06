@@ -8,33 +8,54 @@ export default {
 
             }
         },
-        'http://risis.eu/cordisH2020': {
+        //Configuration Manager: change the graph name if you use another name in your general.js config
+        'http://ld-r.org/configurations': {
             list: [
                 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
-                'http://risis.eu/cordisH2020/vocab/projectParticipant',
-                'http://risis.eu/cordisH2020/vocab/fundingScheme',
-                'http://risis.eu/cordisH2020/vocab/topic',
-                'http://risis.eu/cordisH2020/vocab/totalCost',
-                'http://risis.eu/cordisH2020/vocab/callID',
-                'http://rdf-vocabulary.ddialliance.org/discovery#startDate',
-                'http://risis.eu/cordisH2020/vocab/durationMonths'
+                'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#scope', 'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#dataset', 'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#resource', 'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#property',
+                'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#endpointType',
+                'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#createdBy'
             ],
             config: {
                 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type': {
-                    label: ['Type'],
-                    hint: ['Type of the resource under investigation.']
+                    objectBrowser: ['TagListBrowser']
                 },
-                'http://risis.eu/cordisH2020/vocab/projectParticipant': {
-                    label: ['Participant'],
-                    hasLinkedValue: 1
+                'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#dataset': {
+                    shortenURI: 0
                 },
-                'http://risis.eu/cordisH2020/vocab/fundingScheme': {
-                    label: ['Funding Scheme'],
-                    hasLinkedValue: 1
+                'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#resource': {
+                    shortenURI: 0,
+                    objectIViewer: ['PrefixBasedView']
                 },
-                'http://risis.eu/cordisH2020/vocab/topic': {
-                    label: ['Topic'],
-                    hasLinkedValue: 1
+                'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#property': {
+                    shortenURI: 0,
+                    objectIViewer: ['PrefixBasedView']
+                },
+                'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#scope': {
+                    objectIViewer: ['BasicOptionView'],
+                    options: [
+                        {label: 'Dataset', value: 'D'},
+                        {label: 'Resource', value: 'R'},
+                        {label: 'Property', value: 'P'},
+                        {label: 'Dataset-Resource', value: 'DR'},
+                        {label: 'Dataset-Property', value: 'DP'},
+                        {label: 'Resource-Property', value: 'RP'},
+                        {label: 'Dataset-Resource-Property', value: 'DRP'},
+                    ]
+                }
+            }
+        },
+        //Example Faceted Browser for DBpedia universities
+        'http://live.dbpedia.org/sparql': {
+            list: [
+                'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', 'http://dbpedia.org/ontology/country', 'http://dbpedia.org/property/established'
+            ],
+            config: {
+                'http://dbpedia.org/property/established': {
+                    label: ['Established Year']
+                },
+                'http://dbpedia.org/ontology/country': {
+                    objectBrowser: ['TagListBrowser']
                 }
             }
         }

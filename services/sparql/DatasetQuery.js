@@ -2,20 +2,29 @@
 import {getQueryDataTypeValue} from '../utils/helpers';
 class DatasetQuery{
     constructor() {
-        /*jshint multistr: true */
-        this.prefixes='\
-        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \
-        PREFIX dcterms: <http://purl.org/dc/terms/> \
-        PREFIX void: <http://rdfs.org/ns/void#> \
-        PREFIX foaf: <http://xmlns.com/foaf/0.1/> \
-        PREFIX skos: <http://www.w3.org/2004/02/skos/core#> \
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \
-        PREFIX schema: <http://schema.org/> \
-        PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> \
-         ';
+        this.prefixes=`
+        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX owl: <http://www.w3.org/2002/07/owl#>
+        PREFIX dcterms: <http://purl.org/dc/terms/>
+        PREFIX void: <http://rdfs.org/ns/void#>
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+        `;
         this.query='';
     }
-    countResourcesByType(graphName, type) {
+    prepareGraphName(graphName){
+        let gStart = 'GRAPH <'+ graphName +'> { ';
+        let gEnd = ' } ';
+        if(!graphName || graphName === 'default'){
+            gStart =' ';
+            gEnd = ' ';
+        }
+        return {gStart: gStart, gEnd: gEnd}
+    }
+    countResourcesByType(endpointParameters, graphName, type) {
+        let {gStart, gEnd} = this.prepareGraphName(graphName);
         let st = '?resource a <'+ type + '> .';
         //will get all the types
         if(!type.length || (type.length && !type[0]) ){
@@ -30,37 +39,43 @@ class DatasetQuery{
             st = '?resource a ?type . FILTER (?type IN (' + typeURIs.join(',') + '))';
         }
         //go to default graph if no graph name is given
-        if(String(graphName)!=='' && graphName){
-            /*jshint multistr: true */
-            this.query = '\
-            SELECT (count(?resource) AS ?total) WHERE {\
-                { GRAPH <' + graphName + '> \
-                    { '+ st +' \
-                    } \
-                } \
-            }  \
-            ';
-        }else{
-            /*jshint multistr: true */
-            this.query = '\
-            SELECT (count(?resource) AS ?total) WHERE { \
-                { '+ st +' \
-                }\
-            }  \
-            ';
+        this.query = `
+        SELECT (count(?resource) AS ?total) WHERE {
+            ${gStart}
+                ${st}
+            ${gEnd}
         }
+        `;
         return this.prefixes + this.query;
     }
-    getResourcesByType(graphName, rconfig, limit, offset) {
+    getResourcesByType(endpointParameters, graphName, rconfig, limit, offset) {
+        let {gStart, gEnd} = this.prepareGraphName(graphName);
         let type = rconfig.resourceFocusType;
-        let resourceLabelProperty;
+        let resourceLabelProperty, resourceImageProperty;
         if(rconfig.resourceLabelProperty){
             resourceLabelProperty = rconfig.resourceLabelProperty;
         }
+        if(rconfig.resourceImageProperty){
+            resourceImageProperty = rconfig.resourceImageProperty;
+        }
         //specify the right label for resources
         let optPhase = 'OPTIONAL { ?resource dcterms:title ?title .} ';
+        let bindPhase = '';
         if(resourceLabelProperty && resourceLabelProperty.length){
-            optPhase = 'OPTIONAL { ?resource <' + resourceLabelProperty[0] + '> ?title .} ';
+            if(resourceLabelProperty.length === 1){
+                optPhase = 'OPTIONAL { ?resource <' + resourceLabelProperty[0] + '> ?title .} ';
+            }else {
+                optPhase = '';
+                let tmpA = [];
+                resourceLabelProperty.forEach(function(prop, index) {
+                    optPhase = optPhase + 'OPTIONAL { ?resource <' + prop + '> ?vp'+index+' .} ';
+                    tmpA.push('?vp' + index);
+                });
+                bindPhase = ' BIND(CONCAT('+tmpA.join(',"-",')+') AS ?title) '
+            }
+        }
+        if(resourceImageProperty && resourceImageProperty.length){
+            optPhase = optPhase + ' OPTIONAL { ?resource <' + resourceImageProperty[0] + '> ?image .} ';
         }
         let st = '?resource a <'+ type + '> .';
         //will get all the types
@@ -75,54 +90,24 @@ class DatasetQuery{
             });
             st = '?resource a ?type . FILTER (?type IN (' + typeURIs.join(',') + '))';
         }
-        //go to default graph if no graph name is given
-        if(String(graphName)!=='' && graphName){
-            /*jshint multistr: true */
-            this.query = '\
-            SELECT DISTINCT ?resource ?title ?label WHERE {\
-                { GRAPH <' + graphName + '> \
-                    { '+ st +' \
-                    } \
-                } '+ optPhase +'\
-                OPTIONAL { ?resource rdfs:label ?label .}  \
-            } LIMIT ' + limit + ' OFFSET ' + offset + ' \
-            ';
-        }else{
-            /*jshint multistr: true */
-            this.query = '\
-            SELECT DISTINCT ?resource ?title ?label ?graphName WHERE { \
-                { GRAPH ?graphName \
-                    { '+ st +' \
-                    }\
-                } \
-                UNION \
-                { '+ st +' \
-                }\
-                OPTIONAL { ?resource dcterms:title ?title .}  \
-                OPTIONAL { ?resource rdfs:label ?label .}  \
-            } LIMIT ' + limit + ' OFFSET ' + offset + ' \
-            ';
+        this.query = `
+        SELECT DISTINCT ?resource ?title ?label ?image WHERE {
+            ${gStart}
+                {
+                    SELECT DISTINCT ?resource  WHERE {
+                        ${gStart}
+                            ${st}
+                        ${gEnd}
+                    }
+                    LIMIT ${limit} OFFSET ${offset}
+                }
+                OPTIONAL { ?resource rdfs:label ?label .}
+                ${optPhase}
+                ${bindPhase}
+            ${gEnd}
+
         }
-        return this.prefixes + this.query;
-    }
-    getPolygons() {
-        /*jshint multistr: true */
-        this.query = '\
-        SELECT DISTINCT ?s ?label ?geometry WHERE {\
-            { GRAPH <http://frank.ld-r.org/> \
-                {  \
-                    ?s a schema:Event . \
-                    ?s schema:location ?loc . \
-                    ?s rdfs:label ?label . \
-                } \
-            } \
-            { GRAPH <http://frank.ld-r.org/polygons> \
-                { \
-                    ?loc geo:geometry ?geometry . \
-                } \
-            } \
-        } \
-        ';
+        `;
         return this.prefixes + this.query;
     }
 }

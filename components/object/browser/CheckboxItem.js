@@ -1,15 +1,14 @@
 import React from 'react';
-import BasicCheckbox from '../editor/individual/BasicCheckbox';
 import ObjectIViewer from '../ObjectIViewer';
 import URIUtil from '../../utils/URIUtil';
+import { Checkbox, Segment } from 'semantic-ui-react';
+
 class CheckboxItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {isActive: false};
     }
     checkBox(status) {
         this.props.onCheck(status, this.props.spec.value);
-        this.setState({isActive: status});
     }
     addCommas(n){
         let rx = /(\d+)(\d{3})/;
@@ -22,10 +21,10 @@ class CheckboxItem extends React.Component {
     }
     render() {
         let title, c;
-        let graphName = this.props.graphName;
+        let datasetURI = this.props.datasetURI;
         if(this.props.config && this.props.config.objectIViewer){
             c = this.props.config;
-            title = <ObjectIViewer graphName={this.props.graphName} spec={this.props.spec} config={c}/>;
+            title = <ObjectIViewer datasetURI={this.props.datasetURI} spec={this.props.spec} config={c}/>;
         }else{
             title = this.props.spec.value;
             if(this.props.spec.label){
@@ -35,23 +34,26 @@ class CheckboxItem extends React.Component {
             }
             if(this.props.spec.valueType === 'uri'){
                 if(this.props.config && this.props.config.hasLinkedValue){
-                    if(this.props.config.linkedGraph){
-                        graphName = this.props.config.linkedGraph[0];
+                    if(this.props.config.containerDatasetURI){
+                        datasetURI = this.props.config.containerDatasetURI[0];
                     }
-                    title = <a className="ui label" href={'/dataset/' + encodeURIComponent(graphName) + '/resource/' + encodeURIComponent(this.props.spec.value)} target="_blank"> {title} </a>;
+                    title = <a className="ui label" href={'/dataset/' + encodeURIComponent(datasetURI) + '/resource/' + encodeURIComponent(this.props.spec.value)} target="_blank"> {title} </a>;
                 }else{
                     title = <a href={this.props.spec.value} target="_blank"> {title} </a>;
                 }
             }
         }
-        if(this.state.isActive){
+
+        if(this.props.checked){
             title = <b> {title} </b>;
         }
         return (
             <div className="ui" ref="checkboxItem">
                 <div className="ui horizontal list">
                     <div className="item">
-                        <BasicCheckbox onToggle={this.checkBox.bind(this)} notInitialize={true} />
+                        <div className="ui basic icon mini button" onClick={this.checkBox.bind(this)}>
+                            <Checkbox checked={this.props.checked} />
+                        </div>
                     </div>
                     <div className="item">
                         {title}

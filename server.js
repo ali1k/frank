@@ -34,6 +34,14 @@ const htmlComponent = React.createFactory(HtmlComponent);
 const debug = debugLib('linked-data-reactor');
 const publicRoutes = ['/', '/about'];
 
+const host = process.env.HOST ? process.env.HOST : 'localhost';
+let port = 3000 ;
+if(env === 'production'){
+    port = process.env.PORT ? process.env.PORT : (serverConfig.serverPort ? serverConfig.serverPort[0] : 3000);
+}else{
+    port = process.env.PORT ? parseInt(process.env.PORT) + 1 : 3001;
+}
+
 const server = express();
 // we need this because "cookie" is true in csrfProtection
 server.use(cookieParser());
@@ -60,7 +68,16 @@ server.set('view options', { layout: false });
 server.engine('html', hogan);
 //------------------
 server.use('/public', express.static(path.join(__dirname, '/build')));
-server.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
+//server.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
+//add frontend npm modules here
+server.use('/json3', express.static(path.join(__dirname, '/node_modules/json3')));
+server.use('/es5-shim', express.static(path.join(__dirname, '/node_modules/es5-shim')));
+server.use('/es6-shim', express.static(path.join(__dirname, '/node_modules/es6-shim')));
+server.use('/semantic-ui', express.static(path.join(__dirname, '/node_modules/semantic-ui-css')));
+server.use('/jquery', express.static(path.join(__dirname, '/node_modules/jquery')));
+server.use('/animate.css', express.static(path.join(__dirname, '/node_modules/animate.css')));
+server.use('/leaflet', express.static(path.join(__dirname, '/node_modules/leaflet')));
+
 server.use('/assets', express.static(path.join(__dirname, '/assets')));
 // Get access to the fetchr plugin instance
 let fetchrPlugin = app.getPlugin('FetchrPlugin');
@@ -113,6 +130,7 @@ server.use((req, res, next) => {
             //clientFile: env === 'production' ? 'main.min.js' : 'main.js',
             //use main.js for both dev and prod modes
             clientFile: 'main.js',
+            addAssets: (env === 'production'),
             context: context.getComponentContext(),
             state: exposed,
             markup: markup
@@ -126,8 +144,12 @@ server.use((req, res, next) => {
     });
 });
 
-const port = process.env.PORT || serverConfig.serverPort[0] || 3000;
 server.listen(port);
-console.log('Listening on port ' + port);
+if(env === 'production'){
+    console.log('[production environment] Check your application on http://%s:%s', host, port);
+}else{
+    console.log('[development environment] Proxy server listening on port ' + port);
+    console.log('[development environment] Check your application on http://%s:%s', host, port-1);
+}
 
 export default server;

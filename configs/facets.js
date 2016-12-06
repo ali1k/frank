@@ -8,11 +8,51 @@ export default {
 
             }
         },
+        //Configuration Manager: change the graph name if you use another name in your general.js config
+        'http://ld-r.org/configurations': {
+            list: [
+                'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
+                'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#scope', 'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#dataset', 'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#resource', 'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#property',
+                'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#endpointType',
+                'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#createdBy'
+            ],
+            config: {
+                'http://www.w3.org/1999/02/22-rdf-syntax-ns#type': {
+                    objectBrowser: ['TagListBrowser']
+                },
+                'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#dataset': {
+                    shortenURI: 0
+                },
+                'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#resource': {
+                    shortenURI: 0,
+                    objectIViewer: ['PrefixBasedView']
+                },
+                'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#property': {
+                    shortenURI: 0,
+                    objectIViewer: ['PrefixBasedView']
+                },
+                'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#scope': {
+                    objectIViewer: ['BasicOptionView'],
+                    options: [
+                        {label: 'Dataset', value: 'D'},
+                        {label: 'Resource', value: 'R'},
+                        {label: 'Property', value: 'P'},
+                        {label: 'Dataset-Resource', value: 'DR'},
+                        {label: 'Dataset-Property', value: 'DP'},
+                        {label: 'Resource-Property', value: 'RP'},
+                        {label: 'Dataset-Resource-Property', value: 'DRP'},
+                    ]
+                }
+            }
+        },
         'http://frank.ld-r.org/': {
             list: [
             'http://semanticweb.cs.vu.nl/2009/11/sem/eventType', 'http://lsdis.cs.uga.edu/projects/semdis/opus#year', 'http://purl.org/linguistics/gold/abbreviation', 'http://schema.org/name', 'http://dbpedia.org/ontology/country', 'http://dbpedia.org/ontology/city'
             ],
             config: {
+                'http://lsdis.cs.uga.edu/projects/semdis/opus#year': {
+                    objectBrowser: ['BarChartBrowser']
+                }
             }
         }
     }

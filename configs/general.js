@@ -3,18 +3,41 @@ export default {
     appFullTitle: ['Linked Frank Badges'],
     //short page title
     appShortTitle: ['LFB'],
-    //Default Named Graph under observation, if not set , will consider all existing graph names
-    defaultGraphName: ['http://frank.ld-r.org/'],
+
+    //Default Dataset under observation, if not set , will consider all existing graph names
+    defaultDatasetURI: [''],
+
     //will prevent access if not logged in
     enableAuthentication: 1,
     //graph that stores users data, must be loaded beforehand
-    authGraphName: ['http://ld-r.org/users'],
-    //the domain name under which basic dynamic resources and user resources will be defined
-    baseResourceDomain: ['http://ld-r.org'],
+    authDatasetURI: ['http://frank.ld-r.org/'],
     //will allow super users to confirm and activate regiastered users
     enableUserConfirmation: 1,
+    //if enabled will allow a recaptcha box in the registration form
+    //note: if it is enabled, you need to set the key parameteres for recaptcha in the  server.js file
+    useGoogleRecaptcha: 0,
+
+    //the domain name under which basic dynamic resources and user resources will be defined
+    baseResourceDomain: ['http://ld-r.org'],
+
     //will enable email notifications
     enableEmailNotifications: 0,
+
     //will put all update actions in log folder
-    enableLogs: 0
+    enableLogs: 0,
+
+    //if provided will track the users on your LD-R instance
+    googleAnalyticsID: '',
+
+    //if set, will use the configs stored in a triple store
+    enableDynamicServerConfiguration: 0,
+    enableDynamicReactorConfiguration: 1,
+    enableDynamicFacetsConfiguration: 1,
+    //if set, wil allow users to create new datasets
+    //only works if enableDynamicReactorConfiguration is set to 1 and triple store allows update qureies
+    enableAddingNewDatasets: 0,
+    //graph that stores your configurations
+    configDatasetURI: ['http://ld-r.org/configurations'],
+    //will enable/disable auto config
+    enableAutomaticConfiguration: 0
 };

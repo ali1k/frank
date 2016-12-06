@@ -1,18 +1,20 @@
 let webpack = require('webpack');
 let path = require('path');
 
+const host = process.env.HOST ? process.env.HOST : 'localhost';
+const mainPort = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+const devPort = process.env.PORT ? parseInt(process.env.PORT) + 1 : 3001;
+
 let webpackConfig = {
     resolve: {
         extensions: ['', '.js', '.jsx']
     },
     entry: {
         main: [
-            'webpack-dev-server/client?http://localhost:3000',
+            'react-hot-loader/patch',
+            'webpack-dev-server/client?http://' + host + ':' + mainPort,
             'webpack/hot/only-dev-server',
             './client.js'
-        ],
-        vendor: [
-            'react', 'react-dom', 'async', 'fluxible', 'fluxible-addons-react', 'fluxible-plugin-fetchr', 'fluxible-router'
         ]
     },
     output: {
@@ -25,12 +27,10 @@ let webpackConfig = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                loaders: [
-                    require.resolve('react-hot-loader'),
-                    require.resolve('babel-loader')
-                ]
+                loaders: ['babel']
             },
-            { test: /\.json$/, loader: 'json-loader'}
+            { test: /\.json$/, loader: 'json-loader'},
+            { test: /\.css$/, loader: 'style-loader!css-loader' }
         ]
     },
     node: {
@@ -38,15 +38,11 @@ let webpackConfig = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-            minChunks: Infinity,
-            filename: '[name].bundle.js'
-        }),
         new webpack.NoErrorsPlugin(),
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+                NODE_ENV: JSON.stringify('dev'),
+                BROWSER: JSON.stringify('true')
             }
         })
     ],
