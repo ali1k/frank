@@ -59,6 +59,10 @@ export default {
                 extendedOViewer: ['BasicIndividualDetailView'],
                 shortenURI: 1
             },
+            'http://xmlns.com/foaf/0.1/img': {
+                label: ['Badge'],
+                objectIViewer: ['BasicImageView']
+            }
             'https://github.com/ali1k/ld-reactor/blob/master/vocabulary/index.ttl#cloneOf': {
                 readOnly: 1,
                 allowPropertyDelete: 0
