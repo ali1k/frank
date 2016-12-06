@@ -27,15 +27,7 @@ export default {
             datasetURI = (params.id ? decodeURIComponent(params.id) : 0);
 
            //control access on authentication
-            if(enableAuthentication){
-                if(!req.user){
-                    callback(null, {datasetURI: datasetURI, graphName: graphName, facets: {}, total: 0, page: 1});
-                }else{
-                    user = req.user;
-                }
-            }else{
-                user = {accountName: 'open'};
-            }
+            user = {accountName: 'open'};
             getDynamicEndpointParameters(user, datasetURI, (endpointParameters)=>{
                 graphName = endpointParameters.graphName;
                 //resource focus type
